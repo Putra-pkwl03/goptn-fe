@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Bell, TrendingUp, Users } from "lucide-react";
+import { Calendar, Bell, School, GraduationCap, Award, FileText, Brain } from 'lucide-react';
 import Navbar from "./Navbar";
 
 export default function Hero() {
@@ -29,45 +29,82 @@ export default function Hero() {
               </button>
             </div>
 
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <Calendar className="w-6 h-6 text-blue-600" />
+            {/* Features Grid - Cards that wrap */}
+            <div className="flex flex-wrap justify-center gap-6 mt-16 max-w-6xl mx-auto">
+              {/* Jadwal Lengkap */}
+              <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition-all w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                <div className="w-11 h-11 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <Calendar className="w-5 h-5 text-blue-600" />
                 </div>
-                <h3 className="font-bold mb-2 text-slate-800">Jadwal Lengkap</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="font-bold mb-3">Jadwal Lengkap</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
                   Informasi jadwal SNBP, SNBT, dan Mandiri dari seluruh PTN
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all">
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <Bell className="w-6 h-6 text-purple-600" />
+              {/* Notifikasi Otomatis */}
+              <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition-all w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                <div className="w-11 h-11 bg-purple-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <Bell className="w-5 h-5 text-purple-600" />
                 </div>
-                <h3 className="font-bold mb-2 text-slate-800">Notifikasi Otomatis</h3>
-                <p className="text-gray-600 text-sm">
+                <h3 className="font-bold mb-3">Notifikasi Otomatis</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
                   Pengingat otomatis agar tidak terlewat pendaftaran penting
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all">
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <TrendingUp className="w-6 h-6 text-pink-600" />
+              {/* Kampus */}
+              <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition-all w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                <div className="w-11 h-11 bg-blue-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <School className="w-5 h-5 text-blue-600" />
                 </div>
-                <h3 className="font-bold mb-2 text-slate-800">Analisis Data</h3>
-                <p className="text-gray-600 text-sm">
-                  Pemetaan minat calon mahasiswa untuk universitas
+                <h3 className="font-bold mb-3">Kampus</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Temukan informasi lengkap PTN di seluruh Indonesia
                 </p>
               </div>
 
-              <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <Users className="w-6 h-6 text-green-600" />
+              {/* Jurusan */}
+              <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition-all w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                <div className="w-11 h-11 bg-purple-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <GraduationCap className="w-5 h-5 text-purple-600" />
                 </div>
-                <h3 className="font-bold mb-2 text-slate-800">Untuk Semua</h3>
-                <p className="text-gray-600 text-sm">
-                  Siswa, Guru BK, dan Universitas dalam satu platform
+                <h3 className="font-bold mb-3">Jurusan</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Jelajahi ratusan jurusan dan prospek karirnya
+                </p>
+              </div>
+
+              {/* Beasiswa */}
+              <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition-all w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                <div className="w-11 h-11 bg-yellow-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <Award className="w-5 h-5 text-yellow-600" />
+                </div>
+                <h3 className="font-bold mb-3">Beasiswa</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Akses informasi beasiswa dari berbagai sumber
+                </p>
+              </div>
+
+              {/* Try Out */}
+              <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition-all w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                <div className="w-11 h-11 bg-green-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <FileText className="w-5 h-5 text-green-600" />
+                </div>
+                <h3 className="font-bold mb-3">Try Out</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Latihan soal UTBK untuk persiapan maksimal
+                </p>
+              </div>
+
+              {/* Tes Potensi */}
+              <div className="bg-white p-4 rounded-2xl shadow-md hover:shadow-xl transition-all w-full sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]">
+                <div className="w-11 h-11 bg-pink-100 rounded-2xl flex items-center justify-center mb-4 mx-auto">
+                  <Brain className="w-5 h-5 text-pink-600" />
+                </div>
+                <h3 className="font-bold mb-3">Tes Potensi</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Temukan jurusan sesuai minat dan bakatmu
                 </p>
               </div>
             </div>
