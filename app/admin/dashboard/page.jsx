@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import Sidebar from "../components/dashboardc/Sidebar";
-import { Navbar } from "../components/dashboardc/Navbar";
-import { Card } from "../components/dashboardc/Card";
+import Sidebar from "../../components/dashboard-admin/Sidebar";
+import { Navbar } from "../../components/dashboard-admin/Navbar";
+import { Card } from "../../components/dashboard-admin/Card";
 
 export default function DashboardPage() {
   const [open, setOpen] = useState(true);

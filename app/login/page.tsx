@@ -27,7 +27,7 @@ export default function Login() {
       localStorage.setItem("token", response.token);
 
       alert("Login berhasil!");
-      router.push("/dashboard-siswa");
+      router.push("/dashboard");
 
     } catch (err) {
       let message = "Terjadi kesalahan";
