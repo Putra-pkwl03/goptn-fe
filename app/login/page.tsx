@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { loginStudent } from "@/lib/auth/login";
+import { getStudentMe } from "@/lib/student/me";
 import Image from "next/image";
 
 export default function Login() {
@@ -26,9 +27,21 @@ export default function Login() {
       console.log("Login success:", response);
       localStorage.setItem("token", response.token);
 
+      const me = await getStudentMe();
+      console.log("me", me);
+
       alert("Login berhasil!");
-      router.push("/personalisasi");
-      // router.push("/dashboard");
+
+      const notDataStudent = 
+        me.profile == null || 
+        me.ptn_choices.length === 0 ||
+        me.entry_paths.length === 0;
+
+      if (notDataStudent) {
+        router.push("/personalisasi");
+      } else {
+        router.push("/dashboard");
+      }
 
     } catch (err) {
       let message = "Terjadi kesalahan";
@@ -134,9 +147,10 @@ export default function Login() {
           </div>
 
           {/* Navigate to Register */}
-          <button 
+          <button
             onClick={() => router.push("/register")}
-            className="w-full py-3 border-2 border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-all">
+            className="w-full py-3 border-2 border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-all"
+          >
             Daftar Akun Baru
           </button>
         </div>
