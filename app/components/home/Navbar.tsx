@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import {
   Disclosure,
@@ -30,7 +31,7 @@ export default function Navbar() {
   const router = useRouter();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  // const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,11 +39,11 @@ export default function Navbar() {
     setIsLoggedIn(Boolean(token));
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => setScrolled(window.scrollY > 10);
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   function handleLogout() {
     localStorage.removeItem("token");
@@ -50,7 +51,6 @@ export default function Navbar() {
     router.push("/login");
   }
 
-  
   return (
     <Disclosure
       as="nav"
@@ -58,7 +58,6 @@ export default function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-
           {/* Mobile menu button */}
           <div className="absolute inset-y-0 left-0 flex items-center lg:hidden">
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white">
@@ -69,15 +68,23 @@ export default function Navbar() {
           </div>
 
           {/* Logo + nav */}
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+          <div className="flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <span className={`text-2xl font-bold ${scrolled ? "text-blue-900" : "text-white"}`}>
-                <Link href="/">GO PTN</Link>
+              <span className="">
+                <Link href="/">
+                  <Image
+                    src="/assets/logo.png"
+                    alt="Logo"
+                    width={80}
+                    height={80}
+                    // className="h-10 w-auto"
+                  />
+                </Link>
               </span>
             </div>
 
             <div className="hidden sm:ml-6 lg:block">
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 my-4">
                 {navigation.map((item) => (
                   <a
                     key={item.name}
