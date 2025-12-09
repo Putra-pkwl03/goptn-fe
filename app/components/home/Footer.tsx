@@ -1,4 +1,6 @@
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -8,10 +10,14 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="font-bold">GP</span>
-              </div>
-              <span className="font-bold">Go PTN</span>
+              <Link href="/">
+                <Image
+                  src="/assets/logo.png"
+                  alt="Logo"
+                  width={100}
+                  height={100}
+                />
+              </Link>
             </div>
             <p className="text-gray-400 text-sm mb-4">
               Platform terlengkap untuk informasi dan pendaftaran PTN di Indonesia.

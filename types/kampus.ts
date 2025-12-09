@@ -45,7 +45,7 @@ export interface Kampus {
   website: string;
   akreditasi: string;
   deskripsi: string;
-  jalur_masuk: string[];
+  jalur_masuk: string;
   total_program_studi: number;
   created_at: string;
   updated_at: string;
