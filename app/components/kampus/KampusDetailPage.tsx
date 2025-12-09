@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { MapPin, Globe, ArrowLeft, BookOpen, Award, Users, TrendingUp, Building2, GraduationCap } from 'lucide-react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { useRouter } from 'next/navigation';
 
 interface KampusData {
   id: number;
@@ -24,11 +23,10 @@ interface KampusData {
 
 interface KampusDetailPageProps {
   kampus: KampusData;
-  // onBack: () => void;
+  onBack: () => void;
 }
 
-export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
-  const route = useRouter();
+export function KampusDetailPage({ kampus, onBack }: KampusDetailPageProps) {
   const [selectedJenjang, setSelectedJenjang] = useState<'diploma' | 'sarjana'>('sarjana');
   const [selectedJalur, setSelectedJalur] = useState<'snbp' | 'snbt' | 'mandiri'>('snbp');
 
@@ -99,7 +97,7 @@ export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
     }
   ];
 
-    const programStudiSarjana = [
+  const programStudiSarjana = [
     {
       id: 1,
       nama: 'Teknik Informatika',
@@ -312,8 +310,6 @@ export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
     }
   ];
 
-
-
   const currentProdi = selectedJenjang === 'diploma' ? programStudiDiploma : programStudiSarjana;
 
   // Calculate total based on selected jalur
@@ -341,7 +337,7 @@ export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
   );
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Hero Section with Image */}
       <div className="relative h-96 overflow-hidden">
         <ImageWithFallback 
@@ -349,12 +345,12 @@ export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
           alt={kampus.nama}
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/60 to-black/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30"></div>
         
         <div className="absolute inset-0 flex flex-col justify-end">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pb-12">
             <button
-              onClick={() => route.push('/kampus')}
+              onClick={onBack}
               className="flex items-center gap-2 text-white mb-6 hover:text-blue-200 transition-colors"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -400,7 +396,7 @@ export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
               </div>
             </div>
             <p className="text-gray-600 text-sm mb-1">Akreditasi</p>
-            <p className="font-bold text-2xl text-gray-900">Unggul ({kampus.akreditasi.toUpperCase()})</p>
+            <p className="font-bold text-2xl text-gray-900">Unggul ({kampus.akreditasi})</p>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
@@ -540,19 +536,19 @@ export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
 
           {/* Summary Statistics */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-linear-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
               <p className="text-sm text-blue-700 mb-1">Total Program Studi</p>
               <p className="font-bold text-2xl text-blue-900">{currentProdi.length}</p>
             </div>
-            <div className="bg-linear-to-br from-green-50 to-green-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
               <p className="text-sm text-green-700 mb-1">Jalur SNBP</p>
               <p className="font-bold text-2xl text-green-900">{totalDayaTampung.snbp} kursi</p>
             </div>
-            <div className="bg-linear-to-br from-purple-50 to-purple-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4">
               <p className="text-sm text-purple-700 mb-1">Jalur SNBT</p>
               <p className="font-bold text-2xl text-purple-900">{totalDayaTampung.snbt} kursi</p>
             </div>
-            <div className="bg-linear-to-br from-orange-50 to-orange-100 rounded-lg p-4">
+            <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4">
               <p className="text-sm text-orange-700 mb-1">Jalur Mandiri</p>
               <p className="font-bold text-2xl text-orange-900">{totalDayaTampung.mandiri} kursi</p>
             </div>
@@ -611,7 +607,7 @@ export function KampusDetailPage({ kampus }: KampusDetailPageProps) {
                       <td className="py-4 px-4 text-gray-600 text-sm">{prodi.fakultas}</td>
                       <td className="py-4 px-4 text-center">
                         <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
-                          {prodi.akreditasi.toUpperCase()}
+                          {prodi.akreditasi}
                         </span>
                       </td>
                       <td className="py-4 px-4 text-center">
