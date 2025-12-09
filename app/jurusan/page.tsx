@@ -1,14 +1,13 @@
 import Footer from "../components/home/Footer";
 import Navbar from "../components/home/Navbar";
-import { JurusanSection } from '../components/jurusan/JurusanSection';
+import { JurusanSection } from "../components/jurusan/JurusanSection";
 
-
-export default function JurusanPage() {
+export default function Page() {
   return (
-    <div>
-        <Navbar />
-        <JurusanSection />
-         <Footer />
-    </div>
-  );
+    <>
+    <Navbar />
+    <JurusanSection />
+    <Footer />
+    </>
+  )
 }

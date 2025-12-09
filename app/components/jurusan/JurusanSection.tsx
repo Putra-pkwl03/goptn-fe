@@ -1,7 +1,10 @@
+
+"use client";
+
+import { Search, TrendingUp, Briefcase, DollarSign, Target, Building2 } from 'lucide-react';
 'use client';
 
-import { Search, TrendingUp, Briefcase, DollarSign, Target } from 'lucide-react';
-import { useState } from 'react';
+
 
 export function JurusanSection() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,6 +14,7 @@ export function JurusanSection() {
     {
       id: 1,
       nama: 'Teknik Informatika',
+      kampus: 'Universitas Indonesia (UI)',
       kategori: 'Saintek',
       deskripsi: 'Mempelajari pengembangan software, AI, dan sistem komputer',
       prospekKarir: ['Software Engineer', 'Data Scientist', 'AI Developer'],
@@ -22,6 +26,7 @@ export function JurusanSection() {
     {
       id: 2,
       nama: 'Kedokteran',
+      kampus: 'Universitas Gadjah Mada (UGM)',
       kategori: 'Saintek',
       deskripsi: 'Program studi untuk menjadi dokter profesional',
       prospekKarir: ['Dokter Umum', 'Dokter Spesialis', 'Researcher'],
@@ -33,6 +38,7 @@ export function JurusanSection() {
     {
       id: 3,
       nama: 'Manajemen',
+      kampus: 'Institut Teknologi Bandung (ITB)',
       kategori: 'Soshum',
       deskripsi: 'Ilmu mengelola organisasi dan bisnis',
       prospekKarir: ['Manager', 'Business Analyst', 'Entrepreneur'],
@@ -44,6 +50,7 @@ export function JurusanSection() {
     {
       id: 4,
       nama: 'Akuntansi',
+      kampus: 'Universitas Airlangga (UNAIR)',
       kategori: 'Soshum',
       deskripsi: 'Mempelajari pencatatan dan analisis keuangan',
       prospekKarir: ['Akuntan', 'Auditor', 'Tax Consultant'],
@@ -55,6 +62,7 @@ export function JurusanSection() {
     {
       id: 5,
       nama: 'Hukum',
+      kampus: 'Universitas Indonesia (UI)',
       kategori: 'Soshum',
       deskripsi: 'Studi tentang sistem hukum dan peraturan',
       prospekKarir: ['Advokat', 'Legal Officer', 'Notaris'],
@@ -66,6 +74,7 @@ export function JurusanSection() {
     {
       id: 6,
       nama: 'Teknik Elektro',
+      kampus: 'Institut Teknologi Bandung (ITB)',
       kategori: 'Saintek',
       deskripsi: 'Mempelajari sistem kelistrikan dan elektronika',
       prospekKarir: ['Electrical Engineer', 'IoT Developer', 'Automation Engineer'],
@@ -77,6 +86,7 @@ export function JurusanSection() {
     {
       id: 7,
       nama: 'Psikologi',
+      kampus: 'Universitas Gadjah Mada (UGM)',
       kategori: 'Soshum',
       deskripsi: 'Ilmu tentang perilaku dan mental manusia',
       prospekKarir: ['Psikolog', 'HR Specialist', 'Counselor'],
@@ -88,6 +98,7 @@ export function JurusanSection() {
     {
       id: 8,
       nama: 'Teknik Sipil',
+      kampus: 'Institut Teknologi Sepuluh Nopember (ITS)',
       kategori: 'Saintek',
       deskripsi: 'Perencanaan dan pembangunan infrastruktur',
       prospekKarir: ['Civil Engineer', 'Project Manager', 'Quantity Surveyor'],
@@ -99,6 +110,7 @@ export function JurusanSection() {
     {
       id: 9,
       nama: 'Farmasi',
+      kampus: 'Institut Pertanian Bogor (IPB)',
       kategori: 'Saintek',
       deskripsi: 'Ilmu tentang obat-obatan dan kesehatan',
       prospekKarir: ['Apoteker', 'Research Scientist', 'Quality Control'],
@@ -110,6 +122,7 @@ export function JurusanSection() {
     {
       id: 10,
       nama: 'Ilmu Komunikasi',
+      kampus: 'Universitas Padjadjaran (UNPAD)',
       kategori: 'Soshum',
       deskripsi: 'Studi tentang komunikasi massa dan media',
       prospekKarir: ['Content Creator', 'Public Relations', 'Journalist'],
@@ -121,6 +134,7 @@ export function JurusanSection() {
     {
       id: 11,
       nama: 'Arsitektur',
+      kampus: 'Universitas Diponegoro (UNDIP)',
       kategori: 'Saintek',
       deskripsi: 'Desain dan perencanaan bangunan',
       prospekKarir: ['Arsitek', 'Interior Designer', 'Urban Planner'],
@@ -132,6 +146,7 @@ export function JurusanSection() {
     {
       id: 12,
       nama: 'Desain Komunikasi Visual',
+      kampus: 'Institut Teknologi Bandung (ITB)',
       kategori: 'Seni',
       deskripsi: 'Seni desain grafis dan komunikasi visual',
       prospekKarir: ['Graphic Designer', 'UI/UX Designer', 'Creative Director'],
@@ -207,6 +222,10 @@ export function JurusanSection() {
                 </div>
 
                 <h3 className="font-bold mb-2 text-gray-900">{jurusan.nama}</h3>
+                <div className="flex items-center gap-2 mb-3">
+                  <Building2 className="w-4 h-4 text-blue-600" />
+                  <p className="text-xs text-blue-600 font-medium">{jurusan.kampus}</p>
+                </div>
                 <p className="text-sm text-gray-600 mb-4">{jurusan.deskripsi}</p>
 
                 <div className="space-y-3 mb-4">
