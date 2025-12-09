@@ -31,6 +31,9 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { getStudentMe } from "@/lib/student/me";
+import { toast } from "sonner";
+import { Toaster } from "sonner";
+import { updateStudentNotification } from "@/lib/student/notification";
 
 export function DashboardStudent() {
   const [hasTakenTryout, setHasTakenTryout] = useState(false);
@@ -51,6 +54,38 @@ export function DashboardStudent() {
     pilihanPTN3: "",
     jurusan3: "",
   });
+  const [showJalurModal, setShowJalurModal] = useState(false);
+  const [emailNotificationEnabled, setEmailNotificationEnabled] =
+    useState(false);
+
+  // Jalur PTN State - Multiple selection with checkboxes
+  const [selectedJalurs, setSelectedJalurs] = useState<string[]>([]);
+  const [selectedMandiriKampus, setSelectedMandiriKampus] = useState("");
+
+  // Mock data untuk jalur mandiri per kampus
+  const jalurMandiriOptions = [
+    { id: 3, jalur: "Jalur Mandiri UI", kampusNama: "Universitas Indonesia" },
+    {
+      id: 4,
+      jalur: "Jalur Mandiri ITB",
+      kampusNama: "Institut Teknologi Bandung",
+    },
+    {
+      id: 5,
+      jalur: "Jalur Mandiri UGM",
+      kampusNama: "Universitas Gadjah Mada",
+    },
+    {
+      id: 6,
+      jalur: "Jalur Mandiri ITS",
+      kampusNama: "Institut Teknologi Sepuluh Nopember",
+    },
+    {
+      id: 7,
+      jalur: "Jalur Mandiri UNAIR",
+      kampusNama: "Universitas Airlangga",
+    },
+  ];
 
   //   const [editData, setEditData] = useState<PersonalisasiData>(initialData);
 
@@ -379,6 +414,72 @@ export function DashboardStudent() {
     "Ilmu Komunikasi",
   ];
 
+  // Handle email notification toggle - Now opens Jalur modal
+  const handleEmailNotificationToggle = () => {
+    setShowJalurModal(true);
+  };
+
+  // Handle checkbox toggle for jalur selection
+  const handleJalurToggle = (jalur: string) => {
+    if (selectedJalurs.includes(jalur)) {
+      setSelectedJalurs(selectedJalurs.filter((j) => j !== jalur));
+      // Reset mandiri kampus if Mandiri is unchecked
+      if (jalur === "Mandiri") {
+        setSelectedMandiriKampus("");
+      }
+    } else {
+      setSelectedJalurs([...selectedJalurs, jalur]);
+    }
+  };
+
+  const handleSaveJalurSelection = async () => {
+    if (!selectedJalurs.length) {
+      toast.error("Gagal! Pilih minimal satu jalur terlebih dahulu.");
+      return;
+    }
+
+    if (selectedJalurs.includes("Mandiri") && !selectedMandiriKampus) {
+      toast.error("Gagal! Pilih jalur mandiri kampus terlebih dahulu.");
+      return;
+    }
+
+    try {
+      // Build notification_type sesuai pilihan jalur
+      const notificationTypes: string[] = [];
+
+      selectedJalurs.forEach((j) => {
+        if (j === "Mandiri") {
+          notificationTypes.push(selectedMandiriKampus); // contoh: "mandiri_ui"
+        } else {
+          notificationTypes.push(j.toLowerCase()); // snbp, snbt, dll
+        }
+      });
+
+      // CALL PATCH API DI SINI
+      await updateStudentNotification({
+        wants_notification: true,
+        notification_type: notificationTypes,
+        campus_id: null, // atau isi jika ada
+      });
+
+      toast.success("Pengaturan notifikasi berhasil diperbarui!");
+
+      // Reset modal state
+      setShowJalurModal(false);
+      setSelectedJalurs([]);
+      setSelectedMandiriKampus("");
+    } catch (error: unknown) {
+      console.error(error);
+
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Gagal menyimpan pengaturan notifikasi";
+
+      toast.error(errorMessage);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
@@ -440,17 +541,34 @@ export function DashboardStudent() {
           <p className="font-bold">{pilihanWithPeluang.length} PTN</p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md p-6">
-          <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-              <Bell className="w-5 h-5 text-purple-600" />
+        <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+          <div className="flex items-start justify-between mb-4">
+            <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center">
+              <Bell className="w-6 h-6 text-purple-600" />
             </div>
-            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
+            <span className="px-2 py-1 bg-purple-50 text-purple-600 text-xs rounded font-medium">
               Premium
             </span>
           </div>
-          <p className="text-gray-600 text-sm mb-1">Notifikasi Aktif</p>
-          <p className="font-bold">WhatsApp + Email + SMS</p>
+          <p className="text-sm text-gray-600 mb-1">Notifikasi Aktif</p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Mail className="w-4 h-4 text-gray-600" />
+              <span className="font-bold text-gray-900">Email</span>
+            </div>
+            <button
+              onClick={handleEmailNotificationToggle}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
+                emailNotificationEnabled ? "bg-purple-600" : "bg-gray-200"
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                  emailNotificationEnabled ? "translate-x-6" : "translate-x-1"
+                }`}
+              />
+            </button>
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-md p-6">
@@ -1228,6 +1346,145 @@ export function DashboardStudent() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Jalur PTN Modal */}
+      <Dialog open={showJalurModal} onOpenChange={setShowJalurModal}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                <Bell className="w-5 h-5 text-purple-600" />
+              </div>
+              <DialogTitle>Pilih Jalur Notifikasi PTN</DialogTitle>
+            </div>
+          </DialogHeader>
+
+          <div className="space-y-6 mt-4">
+            <p className="text-sm text-gray-600">
+              Pilih jalur PTN untuk mendapatkan notifikasi otomatis via email.
+              Anda dapat memilih lebih dari satu jalur.
+            </p>
+
+            {/* Jalur PTN Checkboxes */}
+            <div>
+              <h4 className="font-medium mb-4">Pilih Jalur PTN</h4>
+              <div className="space-y-3">
+                {/* SNBP Checkbox */}
+                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50">
+                  <input
+                    type="checkbox"
+                    checked={selectedJalurs.includes("SNBP")}
+                    onChange={() => handleJalurToggle("SNBP")}
+                    className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <div className="ml-3 flex-1">
+                    <span className="font-medium text-gray-900">SNBP</span>
+                    <p className="text-sm text-gray-500">
+                      Seleksi Nasional Berdasarkan Prestasi
+                    </p>
+                  </div>
+                </label>
+
+                {/* SNBT Checkbox */}
+                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-purple-50 transition-colors has-[:checked]:border-purple-500 has-[:checked]:bg-purple-50">
+                  <input
+                    type="checkbox"
+                    checked={selectedJalurs.includes("SNBT")}
+                    onChange={() => handleJalurToggle("SNBT")}
+                    className="w-5 h-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                  />
+                  <div className="ml-3 flex-1">
+                    <span className="font-medium text-gray-900">SNBT</span>
+                    <p className="text-sm text-gray-500">
+                      Seleksi Nasional Berdasarkan Tes
+                    </p>
+                  </div>
+                </label>
+
+                {/* Mandiri Checkbox */}
+                <label className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-orange-50 transition-colors has-[:checked]:border-orange-500 has-[:checked]:bg-orange-50">
+                  <input
+                    type="checkbox"
+                    checked={selectedJalurs.includes("Mandiri")}
+                    onChange={() => handleJalurToggle("Mandiri")}
+                    className="w-5 h-5 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+                  />
+                  <div className="ml-3 flex-1">
+                    <span className="font-medium text-gray-900">Mandiri</span>
+                    <p className="text-sm text-gray-500">
+                      Jalur Mandiri per Kampus
+                    </p>
+                  </div>
+                </label>
+
+                {/* Mandiri Kampus Dropdown - Conditional */}
+                {selectedJalurs.includes("Mandiri") && (
+                  <div className="ml-8 mt-3 p-4 bg-orange-50 border-2 border-orange-200 rounded-lg">
+                    <label className="block text-sm font-medium mb-2 text-orange-900">
+                      Pilih Kampus Jalur Mandiri
+                    </label>
+                    <select
+                      value={selectedMandiriKampus}
+                      onChange={(e) => setSelectedMandiriKampus(e.target.value)}
+                      className="w-full px-3 py-2 border-2 border-orange-300 rounded-lg text-sm focus:outline-none focus:border-orange-500 bg-white"
+                    >
+                      <option value="">-- Pilih Kampus --</option>
+                      {jalurMandiriOptions.map((option) => (
+                        <option key={option.id} value={option.jalur}>
+                          {option.kampusNama}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Selected Summary */}
+            {selectedJalurs.length > 0 && (
+              <div className="p-4 bg-purple-50 border-2 border-purple-200 rounded-lg">
+                <h5 className="text-sm font-medium text-purple-900 mb-2">
+                  Jalur yang Dipilih:
+                </h5>
+                <div className="flex flex-wrap gap-2">
+                  {selectedJalurs.map((jalur, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-medium"
+                    >
+                      {jalur === "Mandiri" && selectedMandiriKampus
+                        ? selectedMandiriKampus
+                        : jalur}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-4">
+              <button
+                onClick={() => {
+                  setShowJalurModal(false);
+                  setSelectedJalurs([]);
+                  setSelectedMandiriKampus("");
+                }}
+                className="flex-1 px-4 py-3 border-2 border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+              >
+                Batal
+              </button>
+              <button
+                onClick={handleSaveJalurSelection}
+                className="flex-1 px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium"
+              >
+                Simpan Pilihan
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Toaster position="top-right" richColors closeButton />
     </div>
   );
 }

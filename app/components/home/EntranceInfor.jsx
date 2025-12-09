@@ -4,7 +4,7 @@ import { Calendar, Clock, BookOpen } from 'lucide-react';
 //   onNotificationClick?: () => void;
 // }
 
-export default function EntranceInfor() {
+export default function EntranceInfor({ onNotify }) {
   const jalurMasuk = [
     {
       nama: 'SNBP',
@@ -108,7 +108,9 @@ export default function EntranceInfor() {
                   ))}
                 </div>
 
-                <button className={`w-full mt-6 py-3 ${colors.badge} text-white rounded-lg hover:opacity-90 transition-all`} >
+                <button
+                  onClick={onNotify}
+                  className={`w-full mt-6 py-3 ${colors.badge} text-white rounded-lg hover:opacity-90 transition-all`} >
                   Dapatkan Notifikasi
                 </button>
               </div>

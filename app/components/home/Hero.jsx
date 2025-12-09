@@ -3,7 +3,7 @@
 import { Calendar, Bell, School, GraduationCap, Award, FileText, Brain } from 'lucide-react';
 import Navbar from "./Navbar";
 
-export default function Hero() {
+export default function Hero({ onStart }) {
   return (
     <div className="bg-linear-to-r from-blue-50 to-white">
       <Navbar />
@@ -22,7 +22,7 @@ export default function Hero() {
 
             <div className="flex gap-4 justify-center mb-16">
               <button
-                // onClick={onGetStarted}
+                onClick={onStart}
                 className="px-8 py-4 bg-linear-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all transform hover:scale-105"
               >
                 Mulai Sekarang - Gratis!
