@@ -1,7 +1,10 @@
+
 "use client";
 
 import { Search, TrendingUp, Briefcase, DollarSign, Target, Building2 } from 'lucide-react';
-import { useState } from 'react';
+'use client';
+
+
 
 export function JurusanSection() {
   const [searchQuery, setSearchQuery] = useState('');

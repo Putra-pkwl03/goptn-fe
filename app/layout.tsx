@@ -4,7 +4,7 @@ import "./globals.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
+import { AlertProvider } from "./components/dashboard-admin/AlertContext";
 
 const redRose = Red_Rose({
   subsets: ["latin"],
@@ -26,7 +26,9 @@ export default function RootLayout({
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AlertProvider>
+          {children}
+        </AlertProvider>
       </body>
     </html>
   );
